@@ -1,10 +1,15 @@
 import io
+import sys
+import cv2
 import socket
 import struct
 from PIL import Image
 
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
+addr = sys.argv[1]
+port = sys.argv[2]
+
 server_socket = socket.socket()
 server_socket.bind(('0.0.0.0', 8000))
 server_socket.listen(0)
@@ -24,6 +29,8 @@ try:
         image_stream.write(connection.read(image_len))
         # Rewind the stream, open it as an image with PIL and do some
         # processing on it
+        image_stream.seek(0)
+        cv2.imshow('frame', image_stream)
         image_stream.seek(0)
         image = Image.open(image_stream)
         print('Image is %dx%d' % image.size)
