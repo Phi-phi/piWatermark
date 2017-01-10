@@ -6,11 +6,12 @@ import picamera
 
 # Connect a client socket to my_server:8000 (change my_server to the
 # hostname of your server)
-client_socket = socket.socket()
-client_socket.connect(('0.0.0.0', 8000))
+socket = socket.socket()
+socket.bind(('0.0.0.0', 8000))
+socket.listen(0)
 
 # Make a file-like object out of the connection
-connection = client_socket.makefile('wb')
+connection = socket.accept()[0].makefile('wb')
 try:
     with picamera.PiCamera() as camera:
         camera.resolution = (640, 480)

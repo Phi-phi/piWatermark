@@ -10,12 +10,11 @@ from PIL import Image
 addr = sys.argv[1]
 port = sys.argv[2]
 
-server_socket = socket.socket()
-server_socket.bind(('0.0.0.0', 8000))
-server_socket.listen(0)
+socket = socket.socket()
+socket.connect((addr, port))
 
 # Accept a single connection and make a file-like object out of it
-connection = server_socket.accept()[0].makefile('rb')
+connection = socket.makefile("rb")
 try:
     while True:
         # Read the length of the image as a 32-bit unsigned int. If the
