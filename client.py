@@ -4,7 +4,6 @@ import cv2
 import socket
 import struct
 import numpy
-from PIL import Image
 
 # Start a socket listening for connections on 0.0.0.0:8000 (0.0.0.0 means
 # all interfaces)
@@ -31,11 +30,9 @@ try:
         # Rewind the stream, open it as an image with PIL and do some
         # processing on it
         image_stream.seek(0)
-        image = Image.open(image_stream)
-        print('Image is %dx%d' % image.size)
-        image.verify()
-        print('Image is verified')
-        cv2.imshow('frame', numpy.asarray(image))
+        cv2.imshow('frame', cv2.imdecode(numpy.fromstring(image_stream.getvalue(), dtype=numpy.uint8), 1))
+        cv2.waitKey(1)
+
 finally:
     connection.close()
     socket.close()
