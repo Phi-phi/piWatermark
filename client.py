@@ -31,8 +31,10 @@ try:
         # processing on it
         image_stream.seek(0)
         cv2.imshow('frame', cv2.imdecode(numpy.fromstring(image_stream.getvalue(), dtype=numpy.uint8), 1))
-        cv2.waitKey(1)
+        if cv2.waitKey(1) == 27:
+            break
 
 finally:
     connection.close()
     socket.close()
+    cv2.destroyAllWindows()

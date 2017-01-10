@@ -15,8 +15,8 @@ socket.listen(0)
 connection = socket.accept()[0].makefile('wb')
 try:
     with picamera.PiCamera() as camera:
-        camera.resolution = (640, 480)
-        camera.framerate = 60
+        camera.resolution = (320, 240)
+        camera.framerate = 120
         # Start a preview and let the camera warm up for 2 seconds
         camera.start_preview()
         time.sleep(0.1)
